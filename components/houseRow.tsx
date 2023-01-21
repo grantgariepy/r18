@@ -1,6 +1,6 @@
 import currencyFormatter from "../helpers/currencyFormatter";
 
-export interface HouseProps{
+interface HouseProps{
  house:{
    id:number,
    address:string,
@@ -9,7 +9,7 @@ export interface HouseProps{
   }
 }
 
-const HouseRow: React.FC<HouseProps> = ( props ) => {
+const HouseRow = ( props:HouseProps ) => {
   return (
     <tr>
       <td>{props.house.address}</td>
