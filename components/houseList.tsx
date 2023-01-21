@@ -16,7 +16,7 @@ const houseArray = [
   },
 ];
 
-const HouseList = () => {
+const HouseList: React.FC = () => {
   const [houses, setHouses] = useState(houseArray);
 
   const addHouse = () => {
