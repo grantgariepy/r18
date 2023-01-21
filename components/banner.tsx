@@ -8,14 +8,14 @@ const subtitleStyle = {
 interface BannerProps {
   subtitle: string;
 }
-const Banner: React.FC<BannerProps> = ( props: BannerProps ) => {
+const Banner: React.FC<BannerProps> = ( {subtitle} ) => {
   return (
     <header className="row mb-4">
       <div className="col-5">
         <img src="./GloboLogo.png" alt="logo" className="logo" />
       </div>
       <div className="col-7 mt-5" style={subtitleStyle}>
-        {props.subtitle}
+        {subtitle}
       </div>
     </header>
   );

@@ -10,7 +10,7 @@ interface FuncProps {
   selectHouse: (values: any) => void;
 }
 
-const HouseList = (props:FuncProps) => {
+const HouseList: React.FC<FuncProps> = ({selectHouse}) => {
   
 const {houses, setHouses, loadingState} = useHouses();
 
@@ -46,7 +46,7 @@ if (loadingState != loadingStatus.loaded){
         </thead>
         <tbody>
           {houses.map((h) => (
-            <HouseRow key={h.id} house={h} selectHouse={props.selectHouse}/>
+            <HouseRow key={h.id} house={h} selectHouse={selectHouse}/>
           ))}
         </tbody>
       </table>

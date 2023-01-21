@@ -13,7 +13,8 @@ interface HouseProps{
 
 
 
-const HouseRow: React.FC<HouseProps> = ( {house, selectHouse} ) => {
+
+const HouseRow: React.FC<HouseProps>= ( {house, selectHouse} ) => {
   return (
     <tr onClick={()=>selectHouse(house)}>
       <td>{house.address}</td>

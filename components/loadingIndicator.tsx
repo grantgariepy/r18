@@ -1,8 +1,8 @@
 interface LoadingProps{
   loadingState:string
 }
-const LoadingIndicator = ( props:LoadingProps ) => {
-  return <h3>{props.loadingState}</h3>;
+const LoadingIndicator:React.FC<LoadingProps> = ( {loadingState} ) => {
+  return <h3>{loadingState}</h3>;
 };
 
 export default LoadingIndicator;
