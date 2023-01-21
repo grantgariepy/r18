@@ -23,7 +23,7 @@
     "next-env.d.ts",
     "**/*.ts",
     "**/*.tsx"
-  ],
+, "pages/api/houses/[id].js", "pages/api/houses/[id].js", "pages/api/houses/index.js", "pages/api/houses/index.js"  ],
   "exclude": [
     "node_modules"
   ]

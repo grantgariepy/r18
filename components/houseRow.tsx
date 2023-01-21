@@ -1,4 +1,5 @@
 import currencyFormatter from "../helpers/currencyFormatter";
+import React from 'react';
 
 interface HouseProps{
  house:{
@@ -6,15 +7,18 @@ interface HouseProps{
    address:string,
    country:string,
    price:number,
-  }
+  },
+  selectHouse: (values: any) => void;
 }
 
-const HouseRow = ( props:HouseProps ) => {
+
+
+const HouseRow: React.FC<HouseProps> = ( {house, selectHouse} ) => {
   return (
-    <tr>
-      <td>{props.house.address}</td>
-      <td>{props.house.country}</td>
-      <td>{currencyFormatter.format(props.house.price)}</td>
+    <tr onClick={()=>selectHouse(house)}>
+      <td>{house.address}</td>
+      <td>{house.country}</td>
+      <td className={`${house.price >= 500000 ? "text-primary" : ""}`}>{currencyFormatter.format(house.price)}</td>
     </tr>
   );
 };
