@@ -5,12 +5,8 @@ import loadingStatus from '../helpers/loadingStatus';
 import LoadingIndicator from "./loadingIndicator";
 
 
-interface FuncProps {
-  //here you can declare the return type (here is void)
-  selectHouse: (values: any) => void;
-}
 
-const HouseList: React.FC<FuncProps> = ({selectHouse}) => {
+const HouseList: React.FC = () => {
   
 const {houses, setHouses, loadingState} = useHouses();
 
@@ -46,7 +42,7 @@ if (loadingState != loadingStatus.loaded){
         </thead>
         <tbody>
           {houses.map((h) => (
-            <HouseRow key={h.id} house={h} selectHouse={selectHouse}/>
+            <HouseRow key={h.id} house={h} />
           ))}
         </tbody>
       </table>

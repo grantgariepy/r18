@@ -4,14 +4,12 @@ import fs from "fs";
 const { promisify } = require("util");
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
-const delay = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
 
 export default async function handler(req, res) {
   const method = req?.method;
   const jsonFile = path.resolve("./", "houses.json");
   const readFileData = await readFile(jsonFile);
   const houses = JSON.parse(readFileData).houses;
-  await delay(1000);
 
   switch (method) {
     case "GET":
