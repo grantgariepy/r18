@@ -1,27 +1,27 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useState } from "react";
 import useHouses from "../hooks/useHouses";
 import HouseRow from "./houseRow";
-import loadingStatus from '../helpers/loadingStatus';
 import LoadingIndicator from "./loadingIndicator";
+import loadingStatus from "../helpers/loadingStatus";
+import { HouseType } from "../types/houseProps";
 
+const HouseList = () => {
+  const { houses, setHouses, loadingState } = useHouses();
 
+  if (loadingState !== loadingStatus.loaded){
 
-const HouseList: React.FC = () => {
-  
-const {houses, setHouses, loadingState} = useHouses();
+    return <LoadingIndicator loadingState={loadingState} />;
+  }
 
-if (loadingState != loadingStatus.loaded){
-  return <LoadingIndicator loadingState={loadingState}/>
-}
   const addHouse = () => {
     setHouses([
       ...houses,
       {
-        id: houses.length + 1,
+        id: 3,
         address: "32 Valley Way, New York",
         country: "USA",
         price: 1000000,
-      },
+      } as HouseType
     ]);
   };
 

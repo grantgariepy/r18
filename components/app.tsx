@@ -1,30 +1,47 @@
+import React, { useCallback, useState } from "react";
 import Banner from "./banner";
-import HouseList from "./houseList";
-import { useState, useCallback } from 'react';
-import React from 'react';
-import navValues from '../helpers/navValues';
+// import navValues from "../helpers/navValues";
 import ComponentPicker from "./componentPicker";
+// import { INavValues } from "../helpers/navValues";
 
-type CallbackType = (...args: string[]) => void;
+interface INavValues {
+  home: string;
+  house: string;
+}
+const navValues: INavValues = {
+  home: "home",
+  house: "house"
+}
+interface INavState {
+  current: string;
+  param?: string;
+}
 
-const navigationContext = React.createContext(navValues.home)
+interface INavContext {
+  current: string;
+  navigate: (navTo: string, param: any) => void;
+  param?:any
+}
+const navigationContext = React.createContext<INavContext>({current:navValues.home, navigate:()=>{} });
 
-const App = () => {
-  const navigate:any = useCallback<CallbackType>(
-    (navTo, param:any) => setNav({ current: navTo, param, navigate }),
-    []
-  );
+const App: React.FC = () => {
+  const [nav, setNav] = useState<INavState>({ current: navValues.home });
 
-  const [nav, setNav] = useState<any>({ current: navValues.home, navigate });
+  const navigate = (navTo: string, param?: string) => {
+    setNav({ current: navTo, param });
+  };
+
   return (
-    <>
-      <navigationContext.Provider value={nav}>
-        <Banner subtitle={"Providing houses all over the world"}/>
+    <navigationContext.Provider value={{ navigate, ...nav }}>
+      <Banner>
+        <div>Providing houses all over the world</div>
+      </Banner>
       <ComponentPicker currentNavLocation={nav.current} />
-      </navigationContext.Provider>
-    </>
+    </navigationContext.Provider>
   );
 };
 
-export { navigationContext }
+
+
+export { navigationContext };
 export default App;

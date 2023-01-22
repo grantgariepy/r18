@@ -1,26 +1,28 @@
 import { useState } from "react";
 
-interface BidTypes{
-  house:{
-    id:number,
-    address:string,
-    country:string,
-    price:number,
-    photo:string,
-    description:string
-  },
-  addBid:(value:any) => void
+interface AddBidProps {
+  house: {
+    id: number;
+  };
+  addBid: (bid: {
+    houseId: number;
+    bidder: string;
+    amount: number;
+  }) => void;
 }
 
-const AddBid:React.FC<BidTypes> = ({ house, addBid }) => {
-
+const AddBid: React.FC<AddBidProps> = ({ house, addBid }) => {
   const emptyBid = {
     houseId: house.id,
     bidder: "",
     amount: 0,
   };
 
-  const [newBid, setNewBid] = useState(emptyBid);
+  const [newBid, setNewBid] = useState<{
+    houseId: number;
+    bidder: string;
+    amount: number;
+  }>(emptyBid);
 
   const onBidSubmitClick = () => {
     addBid(newBid);
@@ -35,7 +37,9 @@ const AddBid:React.FC<BidTypes> = ({ house, addBid }) => {
           className="h-100"
           type="text"
           value={newBid.bidder}
-          onChange={(e) => setNewBid({ ...newBid, bidder: e.target.value })}
+          onChange={(e) =>
+            setNewBid({ ...newBid, bidder: e.target.value })
+          }
           placeholder="Bidder"
         ></input>
       </div>

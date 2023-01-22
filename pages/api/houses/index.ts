@@ -1,15 +1,27 @@
 import path from "path";
 import fs from "fs";
-
-const { promisify } = require("util");
+import { promisify } from "util";
 const readFile = promisify(fs.readFile);
 const writeFile = promisify(fs.writeFile);
 
-export default async function handler(req, res) {
+interface Request {
+    method: string;
+    body: any;
+}
+
+interface Response {
+    setHeader(header: string, value: string | string[]): void;
+    status(code: number): Response;
+    json(data: any): void;
+    send(data: string): void;
+    end(data: string): void;
+}
+
+export default async function handler(req: Request, res: Response) {
   const method = req?.method;
   const jsonFile = path.resolve("./", "houses.json");
   const readFileData = await readFile(jsonFile);
-  const houses = JSON.parse(readFileData).houses;
+  const houses = JSON.parse(readFileData.toString()).houses;
 
   switch (method) {
     case "GET":
@@ -28,9 +40,9 @@ export default async function handler(req, res) {
 
     case "POST":
       try {
-        const recordFromBody = req?.body;
-        recordFromBody.id = Math.max(...houses.map((h) => h.id)) + 1;
-        const newHousesArray = [...houses, recordFromBody];
+        const recordFromBody: any = req?.body;
+        recordFromBody.id = Math.max(...houses.map((h: {id: number}) => h.id)) + 1;
+        const newHousesArray: Array<any> = [...houses, recordFromBody];
         writeFile(
           jsonFile,
           JSON.stringify(
@@ -39,7 +51,7 @@ export default async function handler(req, res) {
             },
             null,
             2
-          )
+          ).toString()
         );
         res.status(200).json(recordFromBody);
         console.log(`POST /api/houses status: 200`);

@@ -83,6 +83,12 @@
       "bidder": "tester",
       "amount": 1000,
       "id": 14
+    },
+    {
+      "houseId": 4,
+      "bidder": "asdf",
+      "amount": 2,
+      "id": 15
     }
   ]
 }

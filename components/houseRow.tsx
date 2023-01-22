@@ -1,21 +1,15 @@
+import { useContext } from "react";
 import currencyFormatter from "../helpers/currencyFormatter";
-import React, { useContext } from 'react';
+import navValues, { INavValues } from "../helpers/navValues";
 import { navigationContext } from "./app";
-import navValues from "../helpers/navValues";
 
-interface HouseProps{
- house:{
-   id:number,
-   address:string,
-   country:string,
-   price:number,
-  },
+interface IHouse {
+  address: string;
+  country: string;
+  price: number;
 }
-
-
-
-const HouseRow: React.FC<HouseProps>= ( {house} ) => {
-  const { navigate }:any = useContext(navigationContext);
+const HouseRow: React.FC<{ house: IHouse }> = ({ house }) => {
+  const { navigate } = useContext(navigationContext);
   return (
     <tr onClick={() => navigate(navValues.house, house)}>
       <td>{house.address}</td>
@@ -28,5 +22,6 @@ const HouseRow: React.FC<HouseProps>= ( {house} ) => {
     </tr>
   );
 };
+
 
 export default HouseRow;

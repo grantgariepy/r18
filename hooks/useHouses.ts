@@ -1,27 +1,34 @@
 import { useEffect, useState } from "react";
-import loadingStatus from "../helpers/loadingStatus";
 import useGetRequest from "./useGetRequest";
 
-interface HousesProps{
-  id:number,
-  address:string,
-  country:string,
-  price:number
+interface HouseType {
+  id: number;
+  country: string;
+  address: string;
+  price: number;
+  description: string;
+  photo?: string;
 }
 
-const useHouses = () => {
-  const [houses, setHouses] = useState<HousesProps[]>([]);
-  const {get, loadingState} = useGetRequest("/api/houses")
+interface UseHousesReturnType {
+  houses: HouseType[];
+  setHouses: (houses: HouseType[]) => void;
+  loadingState: string;
+}
+
+const useHouses = (): UseHousesReturnType => {
+  const [houses, setHouses] = useState<HouseType[]>([]);
+  const { get, loadingState } = useGetRequest("/api/houses");
 
   useEffect(() => {
     const fetchHouses = async () => {
       const houses = await get();
-      setHouses(houses)
-    }
+      setHouses(houses);
+    };
     fetchHouses();
   }, [get]);
 
-  return { houses, setHouses, loadingState};
+  return { houses, setHouses, loadingState };
 };
 
 export default useHouses;

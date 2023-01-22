@@ -1,25 +1,41 @@
 import path from "path";
 import fs from "fs";
-const { promisify } = require("util");
+import { promisify } from "util";
 
 const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
 
-export default async function userHandler(req, res) {
-  const houseId = parseInt(req?.query?.houseId);
+interface Request {
+  query: {
+    houseId: number;
+  };
+  method: string;
+  body: any;
+}
+
+interface Response {
+  setHeader(header: string, value: string | string[]): void;
+  status(code: number): Response;
+  send(data: string): void;
+  json(data: any): void;
+  end(data: string): void;
+}
+
+export default async function userHandler(req: Request, res: Response) {
+  const houseId = Number(req?.query?.houseId);
   const method = req?.method;
   const jsonFile = path.resolve("./", "bids.json");
 
   async function getBidsData() {
     const readFileData = await readFile(jsonFile);
-    return JSON.parse(readFileData).bids;
+    return JSON.parse(readFileData.toString()).bids;
   }
 
   switch (method) {
     case "GET":
       try {
         const bids = await getBidsData();
-        const filteredBids = bids.filter((rec) => rec.houseId === houseId);
+        const filteredBids = bids.filter((rec: {houseId: number}) => rec.houseId === Number(houseId));
         if (!bids)
           res.status(404).send("Error: Request failed with status code 404");
 
@@ -27,15 +43,15 @@ export default async function userHandler(req, res) {
         res.status(200).send(JSON.stringify(filteredBids, null, 2));
 
         console.log(`GET /api/bids/${houseId} status: 200`);
-      } catch {
-        console.log("/api/bids error:", e);
+      } catch (error) {
+        console.log("/api/bids error:", error);
       }
 
       break;
     case "POST":
       try {
-        const recordFromBody = req?.body;
-        const bids = await getBidsData();
+        const recordFromBody: any = req?.body;
+        const bids: Array<any> = await getBidsData();
         recordFromBody.id = Math.max(...bids.map((b) => b.id)) + 1;
         const newBidsArray = [...bids, recordFromBody];
         writeFile(
