@@ -10,7 +10,7 @@ interface Request {
     houseId: number;
   };
   method: string;
-  body: any;
+  body: string;
 }
 
 interface Response {

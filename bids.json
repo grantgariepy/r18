@@ -89,6 +89,18 @@
       "bidder": "asdf",
       "amount": 2,
       "id": 15
+    },
+    {
+      "houseId": 2,
+      "bidder": "test",
+      "amount": 1,
+      "id": 16
+    },
+    {
+      "houseId": 3,
+      "bidder": "asdf",
+      "amount": 3,
+      "id": 17
     }
   ]
 }

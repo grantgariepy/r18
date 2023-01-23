@@ -1,8 +1,14 @@
 import { useEffect, useState } from "react";
+import { AddBidProps } from "../components/addBid";
 import useGetRequest from "./useGetRequest";
 
+export interface IBid {
+  houseId:number;
+  bidder:string;
+  amount:number
+}
 const useBids = (houseId: number) => {
-  const [bids, setBids] = useState<Array<any>>([]);
+  const [bids, setBids] = useState<Array<{ houseId: number; bidder: string; amount: number; }>>([]);
   const { get, loadingState } = useGetRequest(`/api/bids/${houseId}`);
 
   useEffect(() => {
@@ -13,7 +19,7 @@ const useBids = (houseId: number) => {
     fetchBids();
   }, [get]);
 
-  const postBid = async (bid: any) => {
+  const postBid = async (bid: { houseId: number; bidder: string; amount: number; }) => {
     await fetch(`/api/bids/${bid.houseId}`, {
       method: "POST",
       headers: {
@@ -24,7 +30,7 @@ const useBids = (houseId: number) => {
     });
   };
 
-  const addBid = (bid: any) => {
+  const addBid = (bid: { houseId: number; bidder: string; amount: number; }) => {
     postBid(bid);
     setBids([...bids, bid]);
   };

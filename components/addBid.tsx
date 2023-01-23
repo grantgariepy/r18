@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-interface AddBidProps {
+export interface AddBidProps {
   house: {
     id: number;
   };

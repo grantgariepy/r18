@@ -1,7 +1,7 @@
 import currencyFormatter from "../helpers/currencyFormatter";
 
 interface Bid {
-  id: number;
+  houseId:number
   bidder: string;
   amount: number;
 }
@@ -23,7 +23,7 @@ const BidList: React.FC<BidListProps> = ({ bids }) => {
           </thead>
           <tbody>
             {bids.map((b) => (
-              <tr key={b.id}>
+              <tr key={b.houseId}>
                 <td>{b.bidder}</td>
                 <td>{currencyFormatter.format(b.amount)}</td>
               </tr>
