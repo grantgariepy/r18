@@ -1,6 +1,7 @@
 import path from "path";
 import fs from "fs";
 import { promisify } from "util";
+import { IBid } from "../../../hooks/useBids";
 
 const writeFile = promisify(fs.writeFile);
 const readFile = promisify(fs.readFile);
@@ -17,7 +18,7 @@ interface Response {
   setHeader(header: string, value: string | string[]): void;
   status(code: number): Response;
   send(data: string): void;
-  json(data: any): void;
+  json(data: string): void;
   end(data: string): void;
 }
 
@@ -50,9 +51,10 @@ export default async function userHandler(req: Request, res: Response) {
       break;
     case "POST":
       try {
-        const recordFromBody: any = req?.body;
-        const bids: Array<any> = await getBidsData();
-        recordFromBody.id = Math.max(...bids.map((b) => b.id)) + 1;
+        const recordFromBody: string = req?.body;
+        const bids: Array<IBid> = await getBidsData();
+        const newRecord = JSON.parse(recordFromBody);
+        newRecord.id = Math.max(...bids.map((b) => b.houseId)) + 1;
         const newBidsArray = [...bids, recordFromBody];
         writeFile(
           jsonFile,

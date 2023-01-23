@@ -13,7 +13,7 @@ interface Request {
 interface Response {
   setHeader(header: string, value: string | string[]): void;
   status(code: number): Response;
-  json(data: any): void;
+  json(data: string): void;
   send(data: string): void;
 }
 

@@ -6,13 +6,13 @@ const writeFile = promisify(fs.writeFile);
 
 interface Request {
     method: string;
-    body: any;
+    body: string;
 }
 
 interface Response {
     setHeader(header: string, value: string | string[]): void;
     status(code: number): Response;
-    json(data: any): void;
+    json(data: string): void;
     send(data: string): void;
     end(data: string): void;
 }
@@ -40,9 +40,9 @@ export default async function handler(req: Request, res: Response) {
 
     case "POST":
       try {
-        const recordFromBody: any = req?.body;
-        recordFromBody.id = Math.max(...houses.map((h: {id: number}) => h.id)) + 1;
-        const newHousesArray: Array<any> = [...houses, recordFromBody];
+        const recordFromBody = JSON.parse(req?.body);
+recordFromBody.id = Math.max(...houses.map((h: {id: number}) => h.id)) + 1;
+        const newHousesArray = [...houses, recordFromBody];
         writeFile(
           jsonFile,
           JSON.stringify(
@@ -51,7 +51,7 @@ export default async function handler(req: Request, res: Response) {
             },
             null,
             2
-          ).toString()
+          )
         );
         res.status(200).json(recordFromBody);
         console.log(`POST /api/houses status: 200`);

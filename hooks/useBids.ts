@@ -8,7 +8,7 @@ export interface IBid {
   amount:number
 }
 const useBids = (houseId: number) => {
-  const [bids, setBids] = useState<Array<{ houseId: number; bidder: string; amount: number; }>>([]);
+  const [bids, setBids] = useState<Array<IBid>>([]);
   const { get, loadingState } = useGetRequest(`/api/bids/${houseId}`);
 
   useEffect(() => {
@@ -19,7 +19,7 @@ const useBids = (houseId: number) => {
     fetchBids();
   }, [get]);
 
-  const postBid = async (bid: { houseId: number; bidder: string; amount: number; }) => {
+  const postBid = async (bid: IBid) => {
     await fetch(`/api/bids/${bid.houseId}`, {
       method: "POST",
       headers: {
@@ -30,7 +30,7 @@ const useBids = (houseId: number) => {
     });
   };
 
-  const addBid = (bid: { houseId: number; bidder: string; amount: number; }) => {
+  const addBid = (bid: IBid) => {
     postBid(bid);
     setBids([...bids, bid]);
   };
