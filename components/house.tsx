@@ -10,7 +10,10 @@ import LoadingIndicator from "./loadingIndicator";
 
 const House = () => {
   const { param: house } = useContext(navigationContext);
-  const { bids, loadingState, addBid } = useBids(house.id);
+  const houseId = house?.id
+  const { bids, loadingState, addBid } = useBids(houseId || 0);
+  if(!house || !house.id) return <div>No house selected</div>
+
 
   if (loadingState !== loadingStatus.loaded)
     return <LoadingIndicator loadingState={loadingState} />;

@@ -1,8 +1,7 @@
-import React, { useCallback, useState } from "react";
+import React, {  useState } from "react";
 import Banner from "./banner";
-// import navValues from "../helpers/navValues";
 import ComponentPicker from "./componentPicker";
-// import { INavValues } from "../helpers/navValues";
+import { IHouse } from "./houseRow";
 
 interface INavValues {
   home: string;
@@ -14,20 +13,20 @@ const navValues: INavValues = {
 }
 interface INavState {
   current: string;
-  param?: string;
+  param?: IHouse | undefined;
 }
 
 interface INavContext {
   current: string;
-  navigate: (navTo: string, param: any) => void;
-  param?:any
+  navigate: (navTo: string, param?: IHouse) => void;
+  param?:IHouse
 }
 const navigationContext = React.createContext<INavContext>({current:navValues.home, navigate:()=>{} });
 
 const App: React.FC = () => {
   const [nav, setNav] = useState<INavState>({ current: navValues.home });
 
-  const navigate = (navTo: string, param?: string) => {
+  const navigate = (navTo: string, param?: IHouse) => {
     setNav({ current: navTo, param });
   };
 

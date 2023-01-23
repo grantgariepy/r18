@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import useHouses from "../hooks/useHouses";
-import HouseRow from "./houseRow";
+import HouseRow, { IHouse } from "./houseRow";
 import LoadingIndicator from "./loadingIndicator";
 import loadingStatus from "../helpers/loadingStatus";
 import { HouseType } from "../types/houseProps";
@@ -21,6 +21,7 @@ const HouseList = () => {
         address: "32 Valley Way, New York",
         country: "USA",
         price: 1000000,
+        photo: ""
       } as HouseType
     ]);
   };
@@ -42,7 +43,7 @@ const HouseList = () => {
         </thead>
         <tbody>
           {houses.map((h) => (
-            <HouseRow key={h.id} house={h} />
+            <HouseRow key={h.id} house={h as IHouse} />
           ))}
         </tbody>
       </table>

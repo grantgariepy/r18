@@ -17,7 +17,7 @@ const Banner: React.FC<{children: React.ReactNode}> = ({ children }) => {
           src="./GloboLogo.png"
           alt="logo"
           className="logo"
-          onClick={() => navigate(navValues.home, null)}
+          onClick={() => navigate(navValues.home, undefined)}
         />
       </div>
       <div className="col-7 mt-5" style={subtitleStyle}>

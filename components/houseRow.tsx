@@ -3,10 +3,13 @@ import currencyFormatter from "../helpers/currencyFormatter";
 import navValues, { INavValues } from "../helpers/navValues";
 import { navigationContext } from "./app";
 
-interface IHouse {
-  address: string;
-  country: string;
-  price: number;
+export interface IHouse {
+    address: string;
+    country: string;
+    price: number;
+    id: number;
+    photo: string;
+    description: string;
 }
 const HouseRow: React.FC<{ house: IHouse }> = ({ house }) => {
   const { navigate } = useContext(navigationContext);
